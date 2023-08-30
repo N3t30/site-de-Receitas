@@ -230,3 +230,35 @@
   .main-footer a:hover {
     filter: brightness(0.8);
   }
+
+  .preparation-steps h1
+  .preparation-steps h2
+  .preparation-steps h3
+  .preparation-steps h4
+  .preparation-steps h5
+  .preparation-steps h6
+  .preparation-steps pre {
+    margin: 2rem 0;
+  }
+
+  .preparation-steps uç
+  .preparation-steps ol {
+    margin: 2rem;
+    padding: 0.2rem;
+
+  }
+
+  /* Generics */ 
+
+  .center{
+    text-align: center;
+  }
+
+  .m-x {
+    margin: 0 var(--spacing-gutter-medium);
+  }
+
+  .m-y {
+    margin: var(--spacing-gutter-medium) 0;
+  }
+  

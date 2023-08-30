@@ -1,3 +1,7 @@
+# model ele é responsavel por fazer o mapeamento
+# entre o codigo e a base de dados
+# os dados da aplicação
+
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -12,8 +16,8 @@ class Category(models.Model):
 class Recipe(models.Model):
     title = models.CharField(max_length=65)
     description = models.CharField(max_length=165)
-    slug = models.SlugField()
-    preparation_time = models.BigIntegerField()
+    slug = models.SlugField(unique=True)
+    preparation_time = models.IntegerField()
     preparation_time_unit = models.CharField(max_length=65)
     servings = models.BigIntegerField()
     servings_unit = models.CharField(max_length=65)
@@ -28,7 +32,7 @@ class Recipe(models.Model):
         Category, on_delete=models.SET_NULL, null=True
     )
     author = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True
+        User, on_delete=models.SET_NULL, null=True, blank=True, default=None
     )
 
     def __str__(self):
