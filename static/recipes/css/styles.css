@@ -1,4 +1,4 @@
-
+/* 
 :root {
     --color-primary: #269fe6;
     --color-primary-hover: #2086c2;
@@ -153,7 +153,7 @@ h6 {
 }
 
 .recipe {
-    background: var(--color-white);
+    background: black;
     box-shadow: -5px 5px 10px rgba(0, 0, 0, .3);
     transition: all 300ms ease-in-out;
     transform: scale(1);
@@ -257,3 +257,19 @@ h6 {
 .main-footer a:hover {
     filter: brightness(.8);
 }
+
+/* MESSAGES */
+
+/* .message {
+    padding: 1rem;
+    border-radius: 4px;
+    border: 1px solid var(--color-dark-text);
+    background: var(--color-gray-2);
+    color: var(--color-dark-text);
+}
+
+.message-error {
+    border: 1px solid var(--color-error-dark);
+    background: var(--color-error-light);
+    color: var(--color-error-dark);
+} */
