@@ -11,7 +11,7 @@ def register_view(request):
     form = RegisterForm(register_form_data)
     return render(request, 'authors/pages/register_view.html', {
         'form': form,
-        'form_action': reverse('authors:create'),
+        'form_action': reverse('authors:register_create'),
     })
 
 
@@ -28,7 +28,15 @@ def register_create(request):
         user = form.save(commit=False)
         user.set_password(user.password)
         user.save()
-        messages.success(request, 'your user is created, please log in.')
+        messages.success(request, 'your user is created, please login.')
 
         del (request.session['register_form_data'])
     return redirect('authors:register')
+
+
+def login_view(request):
+    return render(request, 'authors/pages/login.html')
+
+
+def login_create(request):
+    return render(request, 'authors/pages/login.html')
