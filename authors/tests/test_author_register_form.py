@@ -23,8 +23,8 @@ class AuthorRegisterFormUnitTest(TestCase):
 
     @parameterized.expand([
         ('username', (
-            'Username must have letters, numbers or one of those @.+-_. '
-            'The length should be between 4 and 150 characters.'
+            'Username must heve letters, numbers or one of those @/./+/-.',
+            'The length shoulds be between 4 and 150 characters.'
         )),
         ('email', 'The e-mail must be valid.'),
         ('password', (
@@ -69,7 +69,7 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         ('first_name', 'Write your first name'),
         ('last_name', 'Write your last name'),
         ('password', 'Password must not be empty'),
-        ('password2', 'Please, repeat your password'),
+        ('password2', 'PLease, repeat your password'),
         ('email', 'E-mail is required'),
     ])
     def test_fields_cannot_be_empty(self, field, msg):
