@@ -344,6 +344,17 @@
     color: black;
   }
 
+  .inline-form{
+    display: inline;
+  }
+
+  .button-logout{
+    cursor: pointer;
+    display: inline;
+    border: none;
+    background: none;
+    color: var(--color-primary-hover);
+  }
 
   /* MESSAGES */
 
