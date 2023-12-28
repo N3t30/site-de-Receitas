@@ -54,9 +54,7 @@ class RecipeHomeViewsTest(RecipeTestBase):
         )
 
     def test_recipe_home_is_paginated(self):
-        for i in range(8):
-            kwargs = {'slug': f'r{i}', 'author_data': {'username': f'u{i}'}}
-            self.make_recipe(**kwargs)
+        self.make_recipe_in_batch(qtd=8)
 
         with patch('recipes.views.PER_PAGE', new=3):
             reponse = self.client.get(reverse('recipes:home'))
@@ -69,11 +67,7 @@ class RecipeHomeViewsTest(RecipeTestBase):
         self.assertEqual(len(paginator.get_page(3)), 2)
 
     def test_invalid_page_query_users_page_one(self):
-        for i in range(8):
-            kwargs = {'slug': f'r{i}', 'author_data': {'username':
-                                                       f'u{i}'}}
-            self.make_recipe(**kwargs)
-
+        self.make_recipe_in_batch(qtd=8)
         with patch('recipes.views.PER_PAGE', new=3):
             response = self.client.get(reverse('recipes:home') + '?page=1A')
             self.assertEqual(
