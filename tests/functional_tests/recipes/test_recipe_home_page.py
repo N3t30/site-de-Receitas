@@ -1,4 +1,5 @@
 
+from time import sleep
 from unittest.mock import patch
 
 import pytest
@@ -19,19 +20,51 @@ class RecipeHomePageFunctionalTest(RecipesbaseFunctionalTest):
 
     @patch('recipes.views.PER_PAGE', new=2)
     def test_recipe_search_input_can_find_correct_recipes(self):
-        recipes = self.make_recipe_in_batch
-        # usuario abre a pagina
+        recipes = self.make_recipe_in_batch()
+
+        title_needed = 'This is what I need'
+
+        recipes[0].title = title_needed
+        recipes[0].save()
+
+        # Usuário abre a página
         self.browser.get(self.live_server_url)
 
-        # Vê um campo de busca com o texto "search for a recipe"
+        # Vê um campo de busca com o texto "Search for a recipe"
         search_input = self.browser.find_element(
             By.XPATH,
-            '//input[@placeholder="Search for a recipe]'
+            '//input[@placeholder="Search for a recipe"]'
         )
 
         # Clica neste input e digita o termo de busca
-        # "Recipe title 1" para encontrar a receita com esse titulo
-        search_input.send_keys(recipes[0].title)
+        # para encontrar a receita o título desejado
+        search_input.send_keys(title_needed)
         search_input.send_keys(Keys.ENTER)
 
-        self.sleep(5)
+        # O usuário vê o que estava procurando na página
+        self.assertIn(
+            title_needed,
+            self.browser.find_element(By.CLASS_NAME, 'main-content-list').text,
+        )
+
+# testes para search finalizados
+# Iniciando testes de paginação
+    @patch('recipes.views.PER_PAGE', new=2)
+    def test_recipe_home_page_pagination(self):
+        self.make_recipe_in_batch()
+
+        # usuario abre a pagina
+        self.browser.get(self.live_server_url)
+        sleep(15)
+        # Vê que tem uma paginação e clica na pagina 2
+        page2 = self.browser.find_element(
+            By.XPATH,
+            '//a[@aria-label="Go to page 2"]'
+        )
+        page2.click
+
+        # vê que tem mais duas receitas ma pagina
+        self.assertEqual(
+            len(self.browser.find_elements(By.CLASS_NAME, 'recipe')),
+            2
+        )
