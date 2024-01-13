@@ -1,14 +1,12 @@
+import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 from .base import AuthorBaseTest
 
 
+@pytest.mark.functional_test
 class AuthorRegisterTest(AuthorBaseTest):
-    def get_by_placeholder(self, web_element, placeholder):
-        return web_element.find_element(
-            By.XPATH, f'//input[@placeholder="{placeholder}"]')
-
     def fiil_form_dummy_data(self, form):
 
         # Do formulario estou selecionando todos os inputs
