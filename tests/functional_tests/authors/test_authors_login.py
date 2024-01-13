@@ -36,3 +36,18 @@ class AuthorsLoginTest(AuthorBaseTest):
             f'your are logged in with {user.username}',
             self.browser.find_element(By.TAG_NAME, 'body').text
         )
+    #  Testando se a aplicação levanta um erro 404 caso o usuario faça um get
+
+    def test_login_create_eraises_404_if_not_post_method(self):
+        # fazendo um get para o login create
+        self.browser.get(
+            self.live_server_url +
+            reverse('authors:login_create'))
+
+        self.assertIn(
+            'Not Found ',
+            self.browser.find_element(By.TAG_NAME, 'body').text
+
+        )
+
+        # self.sleep()
