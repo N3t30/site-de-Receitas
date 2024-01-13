@@ -62,7 +62,7 @@ class AuthorsLoginTest(AuthorBaseTest):
         # Usuario vê o formulario de login
         form = self.browser.find_element(By.CLASS_NAME, 'main-form')
 
-        # Tenta enviar valores vazios ou inexistente
+        # Tenta enviar valores vazios
         username_field = self.get_by_placeholder(form, 'Type your username')
         password_field = self.get_by_placeholder(form, 'Type your password')
 
@@ -75,6 +75,35 @@ class AuthorsLoginTest(AuthorBaseTest):
         # vê uma menssagem de erro na tela
         self.assertIn(
             'Error to validate form data',
+            self.browser.find_element(By.TAG_NAME, 'body').text
+
+        )
+
+        self.sleep()
+
+    def test_form_login_invalid_credential(self):
+        string_password = 'invalid_password '
+        user = User.objects.create_user(
+            username='invalid_user ', password=string_password)
+        # Usuario abre a pagina
+        self.browser.get(self.live_server_url + reverse('authors:login'))
+
+        # Usuario vê o formulario de login
+        form = self.browser.find_element(By.CLASS_NAME, 'main-form')
+
+        # Tenta enviar valores inexistente
+        username_field = self.get_by_placeholder(form, 'Type your username')
+        password_field = self.get_by_placeholder(form, 'Type your password')
+
+        username_field.send_keys(user.username)
+        password_field.send_keys(string_password)
+
+        # Envia o formulario
+        form.submit()
+
+        # vê uma menssagem de erro na tela
+        self.assertIn(
+            'invalid credentials',
             self.browser.find_element(By.TAG_NAME, 'body').text
 
         )
