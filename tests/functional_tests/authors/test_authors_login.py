@@ -45,7 +45,7 @@ class AuthorsLoginTest(AuthorBaseTest):
             reverse('authors:login_create'))
 
         self.assertIn(
-            'Not Found ',
+            'Not Found',
             self.browser.find_element(By.TAG_NAME, 'body').text
 
         )
