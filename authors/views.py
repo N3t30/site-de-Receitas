@@ -4,11 +4,24 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from slugify import slugify
 
 from authors.forms.recipe_forms import AuthorRecipeForm
 from recipes.models import Recipe
 
 from .forms import LoginForm, RegisterForm
+
+
+def generate_unique_slug(title):
+    base_slug = slugify(title)
+    unique_slug = base_slug
+    counter = 1
+
+    while Recipe.objects.filter(slug=unique_slug).exists():
+        unique_slug = f"{base_slug}-{counter}"
+        counter += 1
+
+    return unique_slug
 
 
 def register_view(request):
@@ -143,7 +156,7 @@ def dashboard_recipe_edit(request, id):
 
 
 @login_required(login_url='authors:login', redirect_field_name='next')
-def dashboard_recipe_new(request, id):
+def dashboard_recipe_new(request):
     form = AuthorRecipeForm(
         data=request.POST or None,
         files=request.FILES or None
@@ -152,7 +165,7 @@ def dashboard_recipe_new(request, id):
     if form.is_valid():
         # Agora, o form é valido e eu posso tentar salvar.
         # Cria o formulário finge que vai salvar os dados, mas não salva
-        recipe = form.save(commit=False)
+        recipe: Recipe = form.save(commit=False)
 
         # Garantir que o usuario esta vendo o formulário dele
         recipe.author = request.user
@@ -160,11 +173,14 @@ def dashboard_recipe_new(request, id):
         recipe.preparation_steps_is_html = False
         # Sempre que salvar nunca será puclicada
         recipe.is_published = False
+        recipe.slug = generate_unique_slug(recipe.title)
 
         recipe.save()
 
         messages.success(request, 'Sua receita foi salva com sucesso!')
-        return redirect(reverse("authors:dashboard_recipe_new", args=(id,)))
+        return redirect(reverse("authors:dashboard_recipe_edit", args=(
+            recipe.id,))
+        )
 
     return render(
         request,
