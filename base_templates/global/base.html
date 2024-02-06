@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -16,6 +17,10 @@
     </main>
 
     {% include "global/partials/footer.html" %}
+
+    <script src="{% static 'recipes/js/scripts.js' %}"></script>
+    
+
 </body>
 
 </html>
