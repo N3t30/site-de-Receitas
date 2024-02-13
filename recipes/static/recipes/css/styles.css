@@ -99,11 +99,12 @@
   }
   .search-input,
   .search-button {
-    border: none;
+    border: bisque;
     background: none;
     outline: none;
     padding: 1rem;
     transition: all 300ms ease-in-out;
+
   }
   .search-input {
     width: 100%;
