@@ -6,10 +6,9 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from slugify import slugify
 
+from authors.forms import LoginForm, RegisterForm
 from authors.forms.recipe_forms import AuthorRecipeForm
 from recipes.models import Recipe
-
-from .forms import LoginForm, RegisterForm
 
 
 def generate_unique_slug(title):
