@@ -24,8 +24,10 @@ urlpatterns = [
         name='dashboard_recipe_delete'
     ),
     path(
+        # dentro de toda classbased view
+        #  tem um metodo que é chamado de as_view
         'dashboard/recipe/<int:id>/edit/',
-        views.dashboard_recipe_edit,
+        views.DashboardRecipe.as_view(),
         name='dashboard_recipe_edit',
     ),
 
