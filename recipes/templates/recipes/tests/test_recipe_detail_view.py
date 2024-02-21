@@ -8,14 +8,14 @@ class RecipeDetailViewsTest(RecipeTestBase):
 
     def test_recipe_detail_view_function_is_correct(self):
         view = resolve(
-            reverse('recipes:recipe', kwargs={'id': 1})
+            reverse('recipes:recipe', kwargs={'pk': 1})
         )
-        self.assertTrue(view.func, views.recipe)
+        self.assertTrue(view.func.view_class, views.RecipeDetail)
 
     def test_recipe_detail_view_returns_404_if_no_recipes_found(self):
         # teste para saber se os status code estão corretos
         response = self.client.get(
-            reverse('recipes:recipe', kwargs={'id': 10000})
+            reverse('recipes:recipe', kwargs={'pk': 10000})
         )
         self.assertEqual(response.status_code, 404)
 
@@ -26,7 +26,7 @@ class RecipeDetailViewsTest(RecipeTestBase):
 
         response = self.client.get(
             reverse('recipes:recipe',
-                    kwargs={'id': 1}))
+                    kwargs={'pk': 1}))
         # cliente abrindo a url
         content = response.content.decode('utf-8')
         # gerou uma resposta que gerou um conteudo que foi convertido string
@@ -39,6 +39,6 @@ class RecipeDetailViewsTest(RecipeTestBase):
         recipe = self.make_recipe(is_published=False)
 
         response = self.client.get(
-            reverse('recipes:recipe', kwargs={'id': recipe.id})
+            reverse('recipes:recipe', kwargs={'pk': recipe.id})
         )
         self.assertEqual(response.status_code, 404)
