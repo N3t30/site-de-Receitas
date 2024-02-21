@@ -96,6 +96,7 @@
     border-radius: 0.4rem;
     position: relative;
     transition: all 300ms ease-in-out;
+    
   }
   .search-input,
   .search-button {
