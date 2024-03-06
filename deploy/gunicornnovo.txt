@@ -1,0 +1,75 @@
+###############################################################################
+# Replace
+# ProjetoRecipes to the name of the gunicorn file you want
+# josen to your user name
+# app_repo to the folder name of your project
+# project to the folder name where you find a file called wsgi.py
+#
+###############################################################################
+# Criando o arquivo ProjetoRecipes.socket
+sudo nano /etc/systemd/system/ProjetoRecipes.socket
+
+###############################################################################
+# Conteúdo do arquivo
+[Unit]
+Description=gunicorn blog socket
+
+[Socket]
+ListenStream=/run/ProjetoRecipes.socket
+
+[Install]
+WantedBy=sockets.target
+
+###############################################################################
+# Criando o arquivo ProjetoRecipes.service
+sudo nano /etc/systemd/system/ProjetoRecipes.service
+
+###############################################################################
+# Conteúdo do arquivo
+[Unit]
+Description=Gunicorn daemon (You can change if you want)
+Requires=ProjetoRecipes.socket
+After=network.target
+
+[Service]
+User=josen
+Group=www-data
+Restart=on-failure
+EnvironmentFile=/home/josen/app_repo/.env
+WorkingDirectory=/home/josen/app_repo
+# --error-logfile --enable-stdio-inheritance --log-level and --capture-output
+# are all for debugging purposes.
+ExecStart=/home/josen/app_repo/venv/bin/gunicorn \
+          --error-logfile /home/josen/app_repo/gunicorn-error-log \
+          --enable-stdio-inheritance \
+          --log-level "debug" \
+          --capture-output \
+          --access-logfile - \
+          --workers 6 \
+          --bind unix:/run/ProjetoRecipes.socket \
+          project.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+
+###############################################################################
+# Ativando
+sudo systemctl start ProjetoRecipes.socket
+sudo systemctl enable ProjetoRecipes.socket
+
+# Checando
+sudo systemctl status ProjetoRecipes.socket
+curl --unix-socket /run/ProjetoRecipes.socket localhost
+sudo systemctl status ProjetoRecipes
+
+# Restarting
+sudo systemctl restart ProjetoRecipes.service
+sudo systemctl restart ProjetoRecipes.socket
+sudo systemctl restart ProjetoRecipes
+
+# After changing something
+sudo systemctl daemon-reload
+
+# Debugging
+sudo journalctl -u ProjetoRecipes.service
+sudo journalctl -u ProjetoRecipes.socket
