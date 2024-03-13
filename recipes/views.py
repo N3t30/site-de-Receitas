@@ -120,7 +120,7 @@ class RecipeDetail(DetailView):
         ctx = super().get_context_data(*args, **kwargs)
 
         ctx.update({
-            'is-detail_page': True
+            'is_detail_page': True
         })
 
         return ctx
