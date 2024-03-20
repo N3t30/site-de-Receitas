@@ -97,7 +97,7 @@ class RecipeListViewSearch(RecipeListViewBase):
 
         ctx.update(
             {
-                'page_title': f'Search for "{search_term}" |',
+                'page_title': f"Search for '{search_term}' |",
                 'search_term': search_term,
                 'additional_url_query': f'&q={search_term}',
             }
