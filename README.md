@@ -23,6 +23,3 @@ Objetivo:
 Criar uma comunidade online onde os amantes da culinária podem compartilhar e descobrir novas receitas, promovendo a interação e a troca de experiências entre os usuários. A aprovação do administrador garante a qualidade e relevância das receitas compartilhadas.
 
 
-Status Atual:
-
-O site está em fase de finalização e em breve estará disponível para a comunidade. Aguarde para explorar e compartilhar suas receitas!
