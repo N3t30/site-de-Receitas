@@ -20,7 +20,7 @@ class AuthorRecipeForm(forms.ModelForm):
         model = Recipe
         fields = 'title', 'description', 'preparation_time', \
             'preparation_time_unit', 'servings', 'servings_unit', \
-            'preparation_steps', 'cover'
+            'preparation_steps', 'cover', 'is_published',
         widgets = {
             'cover': forms.FileInput(
                 attrs={
