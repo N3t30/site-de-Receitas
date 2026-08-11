@@ -1,13 +1,26 @@
-{% if user.is_authenticated %}
-<div>
-    your are logged in with
-    {{ request.user.username }}.
-    <a class="btn btn-secondary" href="{% url "authors:dashboard" %}">See your recipes, </a>
-    <a class="btn btn-primary" href="{% url "authors:dashboard_recipe_new" %}">Create a new recipe </a>or
-    <form class="inline-form" action="{% url "authors:logout" %}" method="POST">
-      {% csrf_token %}
-      <input type="hidden" name="username" value="{{request.user.username}}">
-      <button class='button-logout' type='submit'>click here</button>
-    </form>to logout.
+<div class="author-nav-bar">
+    <div class="author-nav-user">
+        <i class="fas fa-user-circle"></i>
+        <span>Hello, <strong>{{ request.user.username }}</strong></span>
+    </div>
+
+    <div class="author-nav-links">
+        <a href="{% url 'authors:dashboard' %}" class="author-nav-item">
+            <i class="fas fa-bars"></i>
+            <span>My Recipes</span>
+        </a>
+
+        <a href="{% url 'authors:dashboard_recipe_new' %}" class="author-nav-item">
+            <i class="fas fa-plus-circle"></i>
+            <span>New Recipe</span>
+        </a>
+
+        <form action="{% url 'authors:logout' %}" method="POST" class="inline-form">
+            {% csrf_token %}
+            <button type="submit" class="author-nav-item button-logout" title="Logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>
+        </form>
+    </div>
 </div>
-{% endif %}

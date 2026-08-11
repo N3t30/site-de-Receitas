@@ -1,45 +1,75 @@
-
 {% extends 'global/base.html' %}
 
-{% block title %} Dashboard ({{ user }}) {% endblock title %}
+{% block title %}Dashboard ({{ user }}){% endblock title %}
 
 {% block content %}
-  <div class="main-content center container">
+
+<div class="main-content center container">
+
     <h2>Dashboard ({{ user }})</h2>
+
     {% include "authors/partials/login_message.html" %}
-      {% include "global/partials/messages.html" %}
+    {% include "global/partials/messages.html" %}
 
     <div class="authors-dashboard-container">
-      <h3>Your recipes</h3>
-      
-      <ul class="authors-dashboard-list">
-        {% for recipe in recipes %} 
-          <li class="authors-dashboard-item">
-            <a class="authors-dashboard-recipe-link" href="{% url 'authors:dashboard_recipe_edit' recipe.id %}">{{ recipe.title }}</a> - 
-            <form 
-            class="inline-form form-delete" 
-            action="{% url 'authors:dashboard_recipe_delete' %}" 
-            method='POST'
-            >
-              {% csrf_token %}
-              <input type="hidden" name="id" value="{{ recipe.id }}">
-              <button class="plaintext-button" type="submit">❌</button>
-            </form>
-          </li>
-        {% empty %}
-          <li>
-            <p>You do not have recipes, please create one</p>
-          </li>
-        {% endfor %}
-      </ul> 
+
+        <h3>Your recipes</h3>
+
+        <div class="authors-dashboard-recipes">
+
+            {% for recipe in recipes %}
+
+                <div class="authors-dashboard-recipe">
+
+                    {% include "recipes/partials/recipe.html" with is_dashboard=True %}
+
+                    <div class="authors-dashboard-actions">
+
+                        <a
+                            class="btn btn-edit"
+                            href="{% url 'authors:dashboard_recipe_edit' recipe.id %}"
+                        >
+                            <i class="fas fa-edit"></i>
+                            Editar
+                        </a>
+
+                        <form
+                            class="inline-form form-delete"
+                            action="{% url 'authors:dashboard_recipe_delete' %}"
+                            method="POST"
+                        >
+                            {% csrf_token %}
+
+                            <input
+                                type="hidden"
+                                name="id"
+                                value="{{ recipe.id }}"
+                            >
+
+                            <button
+                                class="btn btn-delete"
+                                type="submit"
+                            >
+                                <i class="fas fa-trash"></i>
+                                Excluir
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <p>Você ainda não possui receitas.</p>
+
+            {% endfor %}
+
+        </div>
+
     </div>
-  </div>
+
+</div>
 
 {% endblock content %}
-
-{% comment %} criando um formulário
-    <form class="inline-form" action="" method="POST">
-      botão para enviar
-      <button class="plaintext-button" type="submit">❌</button>
-    </form>
-{% endcomment %}

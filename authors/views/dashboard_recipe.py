@@ -10,7 +10,6 @@ from authors.forms.recipe_forms import AuthorRecipeForm
 from recipes.models import Recipe
 
 
-# Quando trabalhamos com Class Based views precisamos herdar de algo
 @method_decorator(
     login_required(login_url='authors:login', redirect_field_name='next'),
     name='dispatch'
@@ -21,7 +20,6 @@ class DashboardRecipe(View):
 
         if id is not None:
             recipe = Recipe.objects.filter(
-                is_published=False,
                 author=self.request.user,
                 pk=id,
             ).first()
@@ -55,16 +53,10 @@ class DashboardRecipe(View):
         )
 
         if form.is_valid():
-            # Agora, o form é valido e eu posso tentar salvar.
-            # Cria o formulário finge que vai salvar os dados, mas não salva
             recipe = form.save(commit=False)
 
-            # Garantir que o usuario esta vendo o formulário dele
             recipe.author = request.user
-            # Nunca vou permitir que esse form receba html
             recipe.preparation_steps_is_html = False
-            # Sempre que salvar nunca será puclicada
-            recipe.is_published = False
 
             recipe.save()
 
