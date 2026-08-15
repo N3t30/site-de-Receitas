@@ -21,6 +21,12 @@
 
                 <div class="authors-dashboard-recipe">
 
+                    {% if recipe.is_published %}
+                        <span class="message message-success">Publicada</span>
+                    {% else %}
+                        <span class="message message-warning">Rascunho</span>
+                    {% endif %}
+
                     {% include "recipes/partials/recipe.html" with is_dashboard=True %}
 
                     <div class="authors-dashboard-actions">

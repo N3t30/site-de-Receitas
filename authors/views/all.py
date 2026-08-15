@@ -100,10 +100,7 @@ def logout_view(request):
 
 @login_required(login_url='authors:login', redirect_field_name='next')
 def dashboard(request):
-    recipes = Recipe.objects.filter(
-        is_published=False,
-        author=request.user
-    )
+    recipes = Recipe.objects.filter(author=request.user)
     return render(request, 'authors/pages/dashboard.html',
                   {
                       'recipes': recipes,
