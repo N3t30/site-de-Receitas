@@ -137,12 +137,105 @@
     background: var(--color-gray-1);
   }
 
-  @media (max-whith: 600px) {
-    .main-content-list,
-    .form-content-grid{
-      grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+  /* Media queries responsivas */
+  @media (max-width: 768px) {
+    /* Header e Logo */
+    .main-header-container {
+      padding: 1rem 0;
+    }
+    .main-logo {
+      font-size: 3rem;
+    }
+    .author-nav-bar {
+      flex-direction: column;
+      gap: 1.2rem;
+      text-align: center;
+    }
+    .author-nav-links {
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
     }
 
+    /* Formulário de Busca */
+    .search-form {
+      max-width: 100%;
+      margin: 0 var(--spacing-gutter-medium);
+    }
+
+    /* Grid de Receitas */
+    .main-content-list {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--spacing-gutter-medium);
+    }
+
+    /* Dashboard e Formulários */
+    .form-content-grid {
+      grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+    }
+    .authors-dashboard-actions {
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    /* Header e Logo */
+    .main-logo {
+      font-size: 2.4rem;
+    }
+    .main-logo-icon {
+      margin-right: 1rem;
+    }
+    .author-nav-bar {
+      padding: 1rem;
+    }
+    .author-nav-links {
+      flex-direction: column;
+      width: 100%;
+      gap: 0.8rem;
+    }
+    .author-nav-item {
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* Formulário de Busca */
+    .search-form {
+      margin: 0;
+    }
+    .search-input {
+      font-size: 1.4rem;
+      padding: 0.8rem 3rem 0.8rem 1rem;
+    }
+
+    /* Grid de Receitas */
+    .main-content-list {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-gutter-medium);
+    }
+
+    /* Dashboard e Formulários */
+    .form-content-grid {
+      grid-template-columns: 1fr;
+    }
+    .span-2 {
+      grid-column: span 1;
+    }
+    .form-content {
+      padding: 0 1rem;
+    }
+    .authors-dashboard-container {
+      padding: 1rem;
+    }
+    .authors-dashboard-actions {
+      flex-direction: column;
+      width: 100%;
+      gap: 1rem;
+    }
+    .authors-dashboard-actions .btn {
+      width: 100%;
+    }
   }
   
   .recipe {
